@@ -1,1 +1,130 @@
-hello dart :)
+void main() {
+  var name = myName();
+  var number = myNumber();
+  
+  /* name = 123; 
+   * ERROR! ONCE A VARIABLE HAS A 'TYPE' ASSOCIATED, 
+   * THE VARIABLE'S TYPE CANNOT BE CHANGE */
+  
+  /* print('My name is ${name.length}'); */
+  print('My name is ${name}');
+  print('My number is $number');
+}
+
+String myName() {
+  return 'Pedro';
+}
+
+int myNumber() {
+  return 18;
+}
+
+/*
+ * int myNumber() {
+  return 18;
+}
+ * */
+
+ /*************************************************************************/
+
+void main() {
+  var person = Person('Pedro');
+
+  person.printName();
+}
+
+class Person {
+  String firstName;
+
+  Person(this.firstName);
+
+  printName() {
+    print(firstName);
+    // print(this.firstName); -  THIS IS ALSO OK
+  }
+}
+
+/*********************************************************************/
+
+
+void main() {
+  var deck = Deck();
+  print(deck);
+  print('--------------');
+  deck.removeCard('Spades', 'King');
+  print(deck);
+  print('--------------');
+  deck.shuffle();
+  print(deck);
+  print('--------------');
+  print(deck.cardsWithSuit('Diamonds'));
+  print('--------------');
+  print(deck.deal(5));
+  print('--------------');
+  print(deck);
+}
+
+class Deck {
+  List<Card> cards = [];
+
+  Deck() {
+    var ranks = [
+      'Ace',
+      'Two',
+      'Three',
+      'Four',
+      'Five',
+      'Six',
+      'Seven',
+      'Eight',
+      'Nine',
+      'Ten',
+      'Jack',
+      'Queen',
+      'King'
+    ];
+    var suits = ['Diamonds', 'Hearts', 'Clubs', 'Spades'];
+    for (var myRank in ranks) {
+      for (var mySuit in suits) {
+        var card = Card(suit: mySuit, rank: myRank);
+        cards.add(card);
+      }
+    }
+  }
+
+  shuffle() {
+    cards.shuffle();
+  }
+
+  cardsWithSuit(String suit) {
+    return cards.where((card) => card.suit == suit);
+  }
+
+  deal(int handSize) {
+    var hand = cards.sublist(0, handSize);
+    cards = cards.sublist(
+      handSize,
+    );
+    return hand;
+  }
+
+  removeCard(String suit, String rank) {
+    return cards.removeWhere((card) => card.suit == suit && card.rank == rank);
+  }
+
+  /* funcao print procura por uma toString e executa */
+  toString() {
+    return cards.toString();
+  }
+}
+
+class Card {
+  String suit;
+  String rank;
+
+  Card({this.suit, this.rank});
+
+  toString() {
+    return '$rank of $suit';
+  }
+}
