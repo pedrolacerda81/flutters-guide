@@ -2,11 +2,13 @@
 import 'package:flutter/material.dart';
 
 //Pages Imports
+import '../blocs/login.dart';
+
 //Widget
 class Login extends StatelessWidget {
   //Variables and Keys
-  /* bool obscureText = true;
-  Color obscureColor = Colors.grey; */
+  //  bool obscureText = true;
+  //  Color obscureColor = Colors.grey;
   //Build Method
   @override
   Widget build(BuildContext context) {
@@ -32,34 +34,48 @@ class Login extends StatelessWidget {
   }
 
   //Other Methods
-  TextField emailField() {
-    return TextField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        hintText: 'you@example.com',
-        labelText: 'Email Adress',
-      ),
+  StreamBuilder emailField() {
+    return StreamBuilder(
+      stream: loginBloc.email,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        return TextField(
+          onChanged: loginBloc.changeEmail,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            hintText: 'you@example.com',
+            labelText: 'Email Adress',
+            errorText: snapshot.error,
+          ),
+        );
+      },
     );
   }
 
-  TextField passField() {
-    return TextField(
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'At least 6 characters.',
-        labelText: 'Password',
-        suffix: IconButton(
-          icon: Icon(
-            Icons.remove_red_eye,
+  StreamBuilder passField() {
+    return StreamBuilder(
+      stream: loginBloc.password,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        return TextField(
+          onChanged: loginBloc.changePass,
+          obscureText: true,
+          decoration: InputDecoration(
+            errorText: snapshot.error,
+            hintText: 'At least 6 characters.',
+            labelText: 'Password',
+            suffix: IconButton(
+              icon: Icon(
+                Icons.remove_red_eye,
+              ),
+              onPressed: () {
+                // obscureText = !obscureText;
+                // obscureColor =
+                //    obscureText ? Colors.grey : Theme.of(context).accentColor;
+              },
+              color: Colors.grey,
+            ),
           ),
-          onPressed: () {
-            /* obscureText = !obscureText;
-            obscureColor =
-                obscureText ? Colors.grey : Theme.of(context).accentColor; */
-          },
-          color: Colors.grey,
-        ),
-      ),
+        );
+      },
     );
   }
 
