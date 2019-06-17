@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 //Pages Imports
 import '../blocs/login.dart';
+import '../blocs/provider.dart';
 
 //Widget
 class Login extends StatelessWidget {
@@ -12,6 +13,9 @@ class Login extends StatelessWidget {
   //Build Method
   @override
   Widget build(BuildContext context) {
+    //Build Method's variables
+    final loginBloc = Provider.of(context);
+    /**/
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -23,10 +27,10 @@ class Login extends StatelessWidget {
         margin: EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            emailField(),
-            passField(),
+            emailField(loginBloc),
+            passField(loginBloc),
             Container(margin: EdgeInsets.only(top: 25.0)),
-            submitButton(context),
+            submitButton(loginBloc),
           ],
         ),
       ),
@@ -34,7 +38,7 @@ class Login extends StatelessWidget {
   }
 
   //Other Methods
-  StreamBuilder emailField() {
+  StreamBuilder emailField(LoginBloc loginBloc) {
     return StreamBuilder(
       stream: loginBloc.email,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -51,7 +55,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  StreamBuilder passField() {
+  StreamBuilder passField(LoginBloc loginBloc) {
     return StreamBuilder(
       stream: loginBloc.password,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -79,11 +83,16 @@ class Login extends StatelessWidget {
     );
   }
 
-  RaisedButton submitButton(BuildContext context) {
-    return RaisedButton(
-      child: Text('LOGIN', style: TextStyle(color: Colors.white)),
-      onPressed: () {},
-      color: Theme.of(context).primaryColor,
+  StreamBuilder submitButton(LoginBloc loginBloc) {
+    return StreamBuilder(
+      stream: loginBloc.submitValid,
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        return RaisedButton(
+          color: Theme.of(context).primaryColor,
+          child: Text('LOGIN', style: TextStyle(color: Colors.white)),
+          onPressed: snapshot.hasData ? loginBloc.loginSubmit : null,
+        );
+      },
     );
   }
 /***/

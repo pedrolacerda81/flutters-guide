@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 //Pages Imports
 import './screens/login.dart';
+import './blocs/provider.dart';
 
 //Widget
 class App extends StatelessWidget {
@@ -9,14 +10,16 @@ class App extends StatelessWidget {
   //Build Method
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Log Me In',
-      theme: ThemeData(
-        primaryColor: Colors.grey[900],
-        accentColor: Colors.amber[800],
+    return Provider(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Log Me In',
+        theme: ThemeData(
+          primaryColor: Colors.grey[900],
+          accentColor: Colors.amber[800],
+        ),
+        home: Login(),
       ),
-      home: Login(),
     );
   }
   //Other Methods
