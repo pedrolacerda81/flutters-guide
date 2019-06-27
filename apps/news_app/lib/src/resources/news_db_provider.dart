@@ -25,7 +25,7 @@ class NewsDbProvider implements Source, Cache {
     //declares a path
     final path = join(documentsDerectory.path, 'items.db');
     //open or create the db
-    Database db = await openDatabase(
+    db = await openDatabase(
       path,
       version: 1,
       onCreate: (Database newDb, version) {
@@ -72,7 +72,8 @@ class NewsDbProvider implements Source, Cache {
   }
 
   Future<int> addItem(Item item) {
-    return db.insert("Items", item.toMapForDb());
+    return db.insert("Items", item.toMapForDb(),
+        conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 }
 
