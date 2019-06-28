@@ -9,7 +9,7 @@ class Item {
   final bool deleted;
   final String type;
   final String by;
-  final int time;
+  //final int time;
   final String text;
   final bool dead;
   final int parent;
@@ -24,7 +24,7 @@ class Item {
         deleted = parsedJson['deleted'] ?? false,
         type = parsedJson['type'],
         by = parsedJson['by'],
-        time = parsedJson['time'],
+        //time = parsedJson['time'] ?? ,
         text = parsedJson['text'] ?? '',
         dead = parsedJson['dead'] ?? false,
         parent = parsedJson['parent'],
@@ -39,7 +39,7 @@ class Item {
         deleted = parsedJson['deleted'] == 1,
         type = parsedJson['type'],
         by = parsedJson['by'],
-        time = parsedJson['time'],
+        //time = parsedJson['time'],
         text = parsedJson['text'],
         dead = parsedJson['dead'] == 1,
         parent = parsedJson['parent'],
@@ -56,7 +56,7 @@ class Item {
       "deleted": deleted ? 1 : 0,
       "type": type,
       "by": by,
-      "time": time,
+      //"time": time,
       "text": text,
       "dead": dead ? 1 : 0,
       "parent": parent,
