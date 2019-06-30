@@ -32,7 +32,7 @@ class Item {
         url = parsedJson['url'],
         score = parsedJson['score'],
         title = parsedJson['title'],
-        descendants = parsedJson['descendants'];
+        descendants = parsedJson['descendants'] ?? 0;
 
   Item.fromDb(Map<String, dynamic> parsedJson)
       : id = parsedJson['id'],

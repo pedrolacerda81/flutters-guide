@@ -23,6 +23,7 @@ class _NewsListState extends State<NewsList> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Hacker News'),
+        backgroundColor: Colors.indigo,
       ),
       body: biuldList(bloc),
     );
