@@ -2,9 +2,10 @@
 import 'package:flutter/material.dart';
 
 //Pages Imports
-import './screens/news_list.dart';
+import './blocs/comments_provider.dart';
 import './blocs/stories_provider.dart';
 import './screens/news_detail.dart';
+import './screens/news_list.dart';
 
 //Widget
 class App extends StatelessWidget {
@@ -12,12 +13,14 @@ class App extends StatelessWidget {
   //Build Method
   @override
   Widget build(BuildContext context) {
-    return StoriesProvider(
+    return CommentsProvider(
+      child: StoriesProvider(
       child: MaterialApp(
         title: 'Hacker News',
         onGenerateRoute: onGenerateRoute,
-      ),
-    );
+     ),
+    ),
+   );
   }
   //Other Methods
   MaterialPageRoute onGenerateRoute(RouteSettings settings) {
@@ -30,7 +33,11 @@ class App extends StatelessWidget {
     } else { // use switch if you've many more routes
       return MaterialPageRoute(
         builder: (BuildContext context) {
+          final commentsBloc = CommentsProvider.of(context);
           final itemId = int.parse(settings.name.replaceAll('/', ''));
+
+          commentsBloc.fetchItemWithComments(itemId);
+
           return NewsDetail(
             itemId: itemId,
           );

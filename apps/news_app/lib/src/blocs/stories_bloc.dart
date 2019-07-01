@@ -26,7 +26,7 @@ class StoriesBloc {
     _itemsFetcher.stream.transform(_itemsTransformer()).pipe(_itemsOutput);
   }
 
-  //Transformers Methods
+  //Transformer Methods
   _itemsTransformer() {
     return ScanStreamTransformer(
       (Map<int, Future<Item>> cache, int id, int index) {
