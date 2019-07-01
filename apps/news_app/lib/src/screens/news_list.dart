@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 //Pages Imports
 import '../blocs/stories_provider.dart';
 import '../widgets/news_list_tile.dart';
+import '../widgets/refresh_news_list.dart';
 
 //Widget
 class NewsList extends StatefulWidget {
@@ -40,14 +41,16 @@ class _NewsListState extends State<NewsList> {
             child: CircularProgressIndicator(),
           );
         }
-        return ListView.builder(
+        return Refresh(
+          child: ListView.builder(
           itemCount: snapshot.data.length,
           itemBuilder: (BuildContext context, int index) {
             bloc.fetchItem(snapshot.data[index]);
             return NewsListTile(
               itemId: snapshot.data[index],
-            );
-          },
+              );
+            },
+          ),
         );
       },
     );
