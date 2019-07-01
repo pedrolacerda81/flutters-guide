@@ -30,11 +30,10 @@ class App extends StatelessWidget {
     } else { // use switch if you've many more routes
       return MaterialPageRoute(
         builder: (BuildContext context) {
-          // extract the item id from settings.name
-          // and pass into NewsDetail()
-          // this is a fantastic location to do some initialization
-          // or data fetching for NewsDetail
-          return NewsDetail();
+          final itemId = int.parse(settings.name.replaceAll('/', ''));
+          return NewsDetail(
+            itemId: itemId,
+          );
         }
       );
     }
