@@ -15,34 +15,36 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommentsProvider(
       child: StoriesProvider(
-      child: MaterialApp(
-        title: 'Hacker News',
-        onGenerateRoute: onGenerateRoute,
-     ),
-    ),
-   );
+        child: MaterialApp(
+          title: 'Hacker News',
+          onGenerateRoute: onGenerateRoute,
+        ),
+      ),
+    );
   }
+
   //Other Methods
   MaterialPageRoute onGenerateRoute(RouteSettings settings) {
-    if(settings.name == '/') {
+    if (settings.name == '/') {
       return MaterialPageRoute(
-      builder: (BuildContext context) {
+        builder: (BuildContext context) {
+          final storiesBloc = StoriesProvider.of(context);
+          storiesBloc.fetchTopIds();
           return NewsList();
         },
       );
-    } else { // use switch if you've many more routes
-      return MaterialPageRoute(
-        builder: (BuildContext context) {
-          final commentsBloc = CommentsProvider.of(context);
-          final itemId = int.parse(settings.name.replaceAll('/', ''));
+    } else {
+      // use switch if you've many more routes
+      return MaterialPageRoute(builder: (BuildContext context) {
+        final commentsBloc = CommentsProvider.of(context);
+        final itemId = int.parse(settings.name.replaceFirst('/', ''));
 
-          commentsBloc.fetchItemWithComments(itemId);
+        commentsBloc.fetchItemWithComments(itemId);
 
-          return NewsDetail(
-            itemId: itemId,
-          );
-        }
-      );
+        return NewsDetail(
+          itemId: itemId,
+        );
+      });
     }
   }
   /**/

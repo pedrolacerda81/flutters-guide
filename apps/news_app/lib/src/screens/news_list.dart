@@ -18,8 +18,6 @@ class _NewsListState extends State<NewsList> {
   @override
   Widget build(BuildContext context) {
     final bloc = StoriesProvider.of(context);
-    //temporary!!!!!!
-    bloc.fetchTopIds();
 
     return Scaffold(
       appBar: AppBar(
@@ -43,11 +41,11 @@ class _NewsListState extends State<NewsList> {
         }
         return Refresh(
           child: ListView.builder(
-          itemCount: snapshot.data.length,
-          itemBuilder: (BuildContext context, int index) {
-            bloc.fetchItem(snapshot.data[index]);
-            return NewsListTile(
-              itemId: snapshot.data[index],
+            itemCount: snapshot.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              bloc.fetchItem(snapshot.data[index]);
+              return NewsListTile(
+                itemId: snapshot.data[index],
               );
             },
           ),

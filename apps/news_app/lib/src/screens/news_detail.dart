@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 //Pages Imports
 import '../blocs/comments_provider.dart';
+import '../widgets/comment.dart';
 import '../models/item.dart';
 
 //Widget
@@ -14,14 +15,14 @@ class NewsDetail extends StatelessWidget {
   //Build Method
   @override
   Widget build(BuildContext context) {
-    final commentsBloc = CommentsProvider.of(context);
+    final bloc = CommentsProvider.of(context);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.indigo,
         title: Text('Detail'),
       ),
-      body: buildDetailBody(commentsBloc),
+      body: buildDetailBody(bloc),
     );
   }
 
@@ -43,14 +44,33 @@ class NewsDetail extends StatelessWidget {
             if (!itemSnapshop.hasData) {
               return Text('Loading Two...');
             }
-            return buildItemTitle(itemSnapshop.data);
+            return buildCommentsList(itemSnapshop.data, snapshot.data);
           },
         );
       },
     );
   }
 
-  Container buildItemTitle(Item item) {
+  Widget buildCommentsList(Item item, Map<int, Future<Item>> itemMap) {
+    final children = <Widget>[];
+    children.add(buildItemTitle(item));
+
+    final commentsList = item.kids.map((kidId) {
+      return Comment(
+        itemId: kidId,
+        itemMap: itemMap,
+        depth: 1,
+      );
+    }).toList();
+
+    children.addAll(commentsList);
+
+    return ListView(
+      children: children,
+    );
+  }
+
+  Widget buildItemTitle(Item item) {
     return Container(
       alignment: Alignment.topCenter,
       margin: EdgeInsets.all(16.0),
